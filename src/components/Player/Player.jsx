@@ -1,26 +1,32 @@
 import React from "react";
 import { useState } from "react";
 
-export default function Player({ name, symbol }) {
+export default function Player({ initialName, symbol }) {
   const [isEditing, setIsEditing] = useState(false);
+  const [playerName, setPlayerName] = useState(initialName)
 
-  //function to handle edit click
+  //use function notation when updating state based on the previous value of that state
   function handleEditClick() {
-    setIsEditing(!isEditing);
+    setIsEditing((editing) => !editing);
+  }
+
+  function handleChange(event) {
+    // console.log(event)
+    setPlayerName(event.target.value);
   }
 
 //storing jsx logic in variable and dynamically loading it in return statement
-  let playerName = <span className="player-name">{name}</span>
+  let editablePlayerName = <span className="player-name">{playerName}</span>
 
   if (isEditing) {
-    playerName = <input type="text" required value={name}></input>
+    editablePlayerName = <input type="text" required value={playerName} onChange={handleChange}></input>
 
 }
 
   return (
     <li>
       <span className="player">
-        {playerName}
+        {editablePlayerName}
 
         <span className="player-symbol">{symbol}</span>
       </span>
